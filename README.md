@@ -2,9 +2,11 @@
 ![image](https://user-images.githubusercontent.com/56196696/171857219-ec9cd762-1b8c-4551-8d36-84caadd33ece.png)
 
 
-#### JavaScript Framework : Vue
-#### Build tool : Vite
-#### UI Framework : Element Plus
+JavaScript Framework : Vue
+
+Build tool : Vite
+
+UI Framework : Element Plus
 
 此專案內容包含以下:
 * 引入Axios及Element套件
