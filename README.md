@@ -18,5 +18,4 @@
 * 更好的RWD，上傳框應該動態變化寬度
 
 
-後端 : 仍是由我開發，歡迎去看看
-[FastAPI](https://github.com/cookieopjax/MusicGenre_FCU_Backend)
+後端 : 仍是由我開發，歡迎[去看看](https://github.com/cookieopjax/MusicGenre_FCU_Backend)
