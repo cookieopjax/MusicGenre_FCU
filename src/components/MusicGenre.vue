@@ -6,31 +6,55 @@
       return{
         musicGenre: '',
         isResult: false,
-        myFile:null,
-        loading: false
+        loading: false,
+        myFile: null,
+        newFile : '',
+        url : 'https://musicgenre-fcu.herokuapp.com/'
       }
-  },
-  computed: {
-    hideText(){
-        this.isResult = false;
-      }
+    },
+    methods: {
       
-  },
-  methods: {
       submitFile(file) {
         this.loading = true
+
+        // 處理檔案
         this.myFile = file.file
         console.log(this.myFile)
         const formData = new FormData();
         formData.append('file', this.myFile);
         const headers = { 'Content-Type': 'multipart/form-data' };
-        this.axios.post('https://musicgenre-fcu.herokuapp.com/uploadfile/', formData, { headers }).then((res) => {       
-          console.log('got the request')
-          this.musicGenre = res.data.genre
-          this.isResult = true
-          this.loading = false
-        });
+
+        //https://musicgenre-fcu.herokuapp.com/
+        //http://localhost:8000/
+        console.log(formData)
+        console.log(headers)
+        this.axios.post(this.url + 'uploadfile', formData, { headers }).then((res) => {       
+          console.log('server is received the file')
+          console.log(res)
+          if(res.data.status == 'error'){
+            this.isResult = false
+            this.loading = false
+            ElMessage.error(res.data.message)
+            return
+          }
+          return res.data.convertedFile
+
+        }).then((res) => {
+          console.log('get ready to predict')
+          console.log(res)
+          this.axios.get(this.url + 'predict/?fileName=' + res).then((res) =>{
+            console.log(res)
+
+            this.musicGenre = res.data.genre
+    
+            this.isResult = true
+            this.loading = false
+          })
+        } );
+
+       
         
+
       },
       checkFile(file) {
         //禁止在加載中上傳檔案
@@ -46,26 +70,25 @@
           return false
         }
         
-        let tempFile =  JSON.parse(JSON.stringify(file))
         
-        let reader = new FileReader();
-
-        
-        reader.onload = function(e) {
-            let arrayBuffer = new Uint8Array(reader.result);
-            console.log(arrayBuffer);
+        if((file.size/1024/1024) > 3){
+          ElMessage.error('檔案大小不得超過3MB')
+          return false
         }
-
-        reader.readAsArrayBuffer(tempFile);
-
-        console.log(tempFile)
-
-        
+             
       },
-     
+      hideText(){
+          this.isResult = false;
+      } 
+    },
+    mounted() {
+      this.axios.get(this.url).then((res) =>
+        console.log(res.data)
+      )
     }
+
   }
- 
+
 </script>
 
 <template>
@@ -86,7 +109,7 @@
     </div>
     <template #tip>
       <div class="el-upload__tip">
-      僅支援WAV及MP3檔案，檔案大小需在2MB以下
+      僅支援WAV及MP3檔案，檔案大小需在3MB以下
       </div>
     </template>
     
@@ -100,9 +123,6 @@
       <h1 v-if="isResult"> {{musicGenre}} </h1>
    
   </div>
-  
-  
-    
   
 
 </template>
