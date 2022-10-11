@@ -1,6 +1,7 @@
 # 音樂風格辨識
 [網站連結](https://musicgenre-fcu.netlify.app/)
 
+點即圖片可查看DEMO影片
 ![](https://i.imgur.com/3YUvbMv.gif)
 
 
