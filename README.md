@@ -2,7 +2,7 @@
 [網站連結](https://musicgenre-fcu.netlify.app/)
 
 點即圖片可查看DEMO影片
-![](https://i.imgur.com/3YUvbMv.gif)
+[![image](https://user-images.githubusercontent.com/56196696/171857219-ec9cd762-1b8c-4551-8d36-84caadd33ece.png)](https://youtu.be/aYK6Oes_AXI)
 
 
 JavaScript Framework : Vue
